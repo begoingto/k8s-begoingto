@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: begoingto-service
+spec:
+  selector:
+    app: begoingto
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort # This is for demonstration purposes. In production, you might use ClusterIP.
+  

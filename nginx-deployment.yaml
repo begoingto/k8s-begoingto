@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: begoingto-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: begoingto
+  template:
+    metadata:
+      labels:
+        app: begoingto
+    spec:
+      containers:
+      - name: begoingto-doc
+        image: begoingto/begoingto-doc:0.0.1
+        ports:
+        - containerPort: 3000
