@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: react-pod
-  label:
+  labels:
     app: react-lbl
 spec:
   containers:
