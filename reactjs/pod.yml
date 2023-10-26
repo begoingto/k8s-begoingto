@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: react-pod
+spec:
+  containers:
+    - name: begoingto-react
+      image: begoingto/ex1-reactjs:latest
+      ports:
+        - containerPort: 80
