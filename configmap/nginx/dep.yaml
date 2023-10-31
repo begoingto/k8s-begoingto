@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-conm-dep
+  namespace: std
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-conm
+  template:
+    metadata:
+      labels:
+        app: nginx-conm
+    spec:
+      containers:
+      - name: nginx-conm
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: volnginx
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: volnginx
+        configMap:
+          name: nginx-config
+          items:
+          - key: index.html
+            path: index.html

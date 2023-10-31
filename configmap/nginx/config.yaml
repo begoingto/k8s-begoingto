@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: std
+data:
+  index.html: | - 
+    <html>
+      <head>
+        <title>Conm</title>
+      </head>
+      <body>
+        <h1 style="color: red; font-size: 35px;">Begoingtok8s</h1>
+        <p>Conm is a simple container orchestration tool.</p>
+        <p>It is a work in progress.</p>
+      </body>
+    </html>
+# please list syntax and describe write content 
+# |- : for using multi-line string
+# |+ : for using multi-line string
+# |

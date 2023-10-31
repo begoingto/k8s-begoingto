@@ -1,0 +1,25 @@
+apiVersion: apps/v1	
+kind: Deployment
+metadata:
+  name: conm-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: conm-pgsql
+  template:
+    metadata:
+      labels:
+        app: conm-pgsql
+    spec:
+      containers:
+        - name: conm-pgsql
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: psql-password
