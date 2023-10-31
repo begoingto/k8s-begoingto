@@ -20,11 +20,11 @@ spec:
         - containerPort: 80
         volumeMounts:
         - name: volnginx
-          mountPath: /usr/share/nginx/html
+          mountPath: /usr/share/nginx
       volumes:
       - name: volnginx
         configMap:
           name: nginx-config
           items:
           - key: index.html
-            path: index.html
+            path: html/index.html
