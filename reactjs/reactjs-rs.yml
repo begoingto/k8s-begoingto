@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: react-replica
+  labels:
+    app: reactjs-replica
+    tier: frontend
+spec:
+  replicas: 3
+  select: 
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: reactjs-replica
+        tier: frontend
+    spec:
+      containers:
+      - name: reactjs-replica
+        image: begoingto/ex1-reactjs:latest
+        ports:
+        - containerPort: 80
