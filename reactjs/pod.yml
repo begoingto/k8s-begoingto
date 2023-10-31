@@ -7,6 +7,6 @@ metadata:
 spec:
   containers:
     - name: begoingto-react
-      image: begoingto/ex1-reactjs:latest
+      image: begoingto/begoingto-doc:0.0.1
       ports:
-        - containerPort: 80
+        - containerPort: 3000
