@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nexus-deployment
+  namespace: nexus
+  # labels:
+  #   app: nexus-repo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nexus-repo
+  template:
+    metadata:
+      labels:
+        app: nexus-repo
+    spec:
+      imagePullSecrets:
+        - name: nexus-secret
+      containers:
+        - name: nexus-repo
+          image: nd.begoingdev.me/ex1-reactjs:latest
+          ports:
+            - containerPort: 80

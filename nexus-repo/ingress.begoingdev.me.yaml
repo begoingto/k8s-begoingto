@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nexus-begoingdev-me
+  namespace: nexus
+spec:
+  rules:
+    - host: ingress.begoingdev.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nexus-service
+                port:
+                  number: 80
