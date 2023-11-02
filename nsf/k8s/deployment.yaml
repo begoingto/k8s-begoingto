@@ -26,4 +26,4 @@ spec:
         - name: spring-vol
           nfs: 
             server: 10.148.0.2
-            path: /opt/nfs/data/spring
+            path: /opt/nfs/data
