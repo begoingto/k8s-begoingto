@@ -1,0 +1,21 @@
+--- 
+- name: mount /opt/nfs/data
+  hosts: workers
+  become: yes
+  vars:
+    master_ip: 10.148.0.2
+  tasks:
+    - name: create mount point
+      file:
+        path: /opt/nfs/data
+        state: directory
+        mode: 0777
+        group: nogroup
+        owner: nobody
+    - name: mount /opt/nfs/data
+      mount:
+        path: /opt/nfs/data
+        src: "{{ master_ip }}:/opt/nfs/data"
+        fstype: nfs
+        opts: defaults
+        state: mounted
