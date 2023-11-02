@@ -1,0 +1,48 @@
+- name: Retrieve private IP
+  hosts: masters
+  become: yes
+  tasks:
+    # - name: Gather facts
+    #   setup:
+
+    # - name: Show private IP
+    #   debug:
+    #     msg: "The private IP is {{ ansible_facts['default_ipv4']['address'] }}"
+    # - name: Create list of ansible_host for all workers
+    #   set_fact:
+    #     workers_ip_list: "{{ ansible_facts['default_ipv4']['address'] }}"
+    #   # loop: "{{ groups['workers'] }}"
+    
+    # - name: Create list of ansible_host for all workers
+    #   set_fact:
+    #     workers_ip_list: "{{ groups['all'] | map('extract', hostvars) | map(attribute='ansible_facts.default_ipv4.address') | list }}"
+    #   when: "'masters' in group_names"
+    # - name: Show the list of ansible_host for workers
+    #   debug:
+    #     var: workers_ip_list
+    #   when: "'masters' in group_names"
+
+    # - name: uninstall nfs-kernel-server in workers
+    #   apt:
+    #     update_cache: yes
+    #     name: nfs-kernel-server
+    #     state: absent
+
+    # - name: Create list of ansible_host for all workers
+    #   set_fact:
+    #     workers_ip_list: "{{ ansible_facts['default_ipv4']['address'] }}"
+
+    # - name: Show the list of ansible_host for workers
+    #   debug:
+    #     var: workers_ip_list
+      
+    - name: Ensure NFS export for all hosts is configured in /etc/exports
+      lineinfile:
+        path: /etc/exports
+        line: "/opt/nfs/data2 10.148.0.2(rw,sync,no_subtree_check) 10.148.0.3(rw,sync,no_subtree_check) 10.148.0.4(rw,sync,no_subtree_check) 10.184.0.2(rw,sync,no_subtree_check) 10.184.0.3(rw,sync,no_subtree_check)"
+        state: present
+    
+    - name: restart nfs-kernel-server
+      service:
+        name: nfs-kernel-server
+        state: restarted

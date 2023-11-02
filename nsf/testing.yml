@@ -1,0 +1,16 @@
+- name: Get ansible_host for all workers
+  hosts: all  # Running locally because we're just gathering information
+  become: yes  
+  tasks:
+    - name: Create list of ansible_host for all workers
+      set_fact:
+        workers_ip_list: "{{ groups['workers'] | map('extract', hostvars) | map(attribute='ansible_host') | list }}"
+      
+    - name: Show the list of ansible_host for workers
+      debug:
+        var: workers_ip_list
+    
+    - name: Print each IP in the workers_ip_list
+      debug:
+        msg: "The current worker IP is {{ item }}"
+      loop: "{{ workers_ip_list }}"
