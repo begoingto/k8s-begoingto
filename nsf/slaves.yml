@@ -1,0 +1,15 @@
+---
+- name: A playbook to install and configure nsf
+  hosts: workers
+  become: yes
+  
+  tasks:
+    - name: copy setup-slave.sh
+      copy:
+        src: setup-master.sh
+        dest: /tmp/setup-slave.sh
+        mode: 0755
+    - name: shell execute setup-slave.sh
+      shell: /bin/bash /tmp/setup-slave.sh
+      args:
+        chdir: /tmp

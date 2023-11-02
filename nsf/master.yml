@@ -1,0 +1,14 @@
+---
+- name: A playbook to install and configure nsf
+  hosts: masters
+  become: yes
+  tasks:
+    - name: copy setup-master.sh
+      copy:
+        src: setup-master.sh
+        dest: /tmp/setup-master.sh
+        mode: 0755
+    - name: shell execute setup-master.sh
+      shell: /bin/bash /tmp/setup-master.sh
+      args:
+        chdir: /tmp

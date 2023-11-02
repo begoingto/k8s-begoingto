@@ -1,0 +1,18 @@
+---
+- name: write export configure
+  hosts: masters
+  become: yes
+  tasks:
+    - name: copy setup-export.sh
+      copy:
+        src: setup-export.sh
+        dest: /tmp/setup-export.sh
+        mode: 0755
+    - name: shell execute setup-export.sh
+      shell: /bin/bash /tmp/setup-export.sh
+      args:
+        chdir: /tmp
+    - name: restart nfs-kernel-server
+      service:
+        name: nfs-kernel-server
+        state: restarted

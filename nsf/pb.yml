@@ -1,7 +1,0 @@
----
-- name: nsf/pb
-  description: A playbook to install and configure nsf
-  hosts: all
-  authors:
-    - name: nsf
-      email:
