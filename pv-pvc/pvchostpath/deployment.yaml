@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostpath-deployment
+  namespace: pvc-hostpath
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: spring-hostpath-app
+  template:
+    metadata:
+      labels:
+        app: spring-hostpath-app
+    spec:
+      containers:
+        - name: spring-app
+          image: 69966/springgradleimg:1.1.1
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: spring-pvc-vol
+              mountPath: /app/src/main/resources/images
+      volumes:
+        - name: spring-pvc-vol
+          persistentVolumeClaim:
+            claimName: spring-hostpath-pvc
