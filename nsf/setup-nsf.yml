@@ -1,11 +1,12 @@
 ---
-- name: A create directory nsf
+- name: A setup nsf
   hosts: all
   become: yes
+  gather_facts: yes
   tasks:
     - name: create nfs directory
       file:
-        path: /opt/nfs/data2
+        path: /opt/nfs/data
         state: directory
         mode: 0777
         group: nogroup
@@ -25,39 +26,39 @@
         state: present
       when: "'masters' in group_names"
 
-    - name: Check if nfs-kernel-server is installed
-      command: dpkg -l | grep nfs-kernel-server
-      register: nfs_kernel_installed
-      changed_when: false
-      failed_when: false
-      check_mode: false
-      when: "'workers' in group_names"
+    # - name: Check if nfs-kernel-server is installed
+    #   command: dpkg -l | grep nfs-kernel-server
+    #   register: nfs_kernel_installed
+    #   changed_when: false
+    #   failed_when: false
+    #   check_mode: false
+    #   when: "'workers' in group_names"
 
-    - name: uninstall nfs-kernel-server in workers
-      apt:
-        update_cache: yes
-        name: nfs-kernel-server
-        state: absent
-      when: 
-        - "'workers' in group_names"
-        - nfs_kernel_installed.rc == 0
+    # - name: uninstall nfs-kernel-server in workers
+    #   apt:
+    #     update_cache: yes
+    #     name: nfs-kernel-server
+    #     state: absent
+    #   when: 
+    #     - "'workers' in group_names"
+    #     - nfs_kernel_installed.rc == 0
     
-    - name: Create list of ansible_host for all workers
-      set_fact:
-        # workers_ip_list: "{{ groups['workers'] | map('extract', hostvars) | map(attribute='ansible_host') | list }}" # using this when you ansible_host is private ip
-        workers_ip_list: "{{ groups['all'] | map('extract', hostvars) | map(attribute='ansible_facts.default_ipv4.address') | list }}"  # using this when you get host private ip
+    # - name: Create list of ansible_host for all workers
+    #   set_fact:
+    #     # workers_ip_list: "{{ groups['workers'] | map('extract', hostvars) | map(attribute='ansible_host') | list }}" # using this when you ansible_host is private ip
+    #     workers_ip_list: "{{ groups['all'] | map('extract', hostvars) | map(attribute='ansible_facts.default_ipv4.address') | list }}"  # using this when you get host private ip
+    #   when: "'masters' in group_names"
       
-    - name: Show the list of ansible_host for workers
-      debug:
-        var: workers_ip_list
-      when: "'masters' in group_names"
+    # - name: Show the list of ansible_host for workers
+    #   debug:
+    #     var: workers_ip_list
+    #   when: "'masters' in group_names"
     
     - name: Add specific IPs to NFS exports
       lineinfile:
         path: /etc/exports
-        line: "/opt/nfs/data2 {{ item }}(rw,sync,no_subtree_check)"
+        line: "/opt/nfs/data 10.148.0.19(rw,sync,no_subtree_check) 10.148.0.20(rw,sync,no_subtree_check) 10.184.0.2(rw,sync,no_subtree_check)"
         state: present
-      loop: "{{ workers_ip_list }}"
       when: "'masters' in group_names"
       notify:
         - Export NFS
@@ -65,7 +66,7 @@
     - name: Allow all IPs to access NFS (for demonstration purposes - not recommended)
       lineinfile:
         path: /etc/exports
-        line: "/opt/nfs/data2 *(rw,sync,no_subtree_check) # All IPs"
+        line: "/opt/nfs/data *(rw,sync,no_subtree_check) # All IPs"
         state: present
       when: "'masters' in group_names"
       notify:

@@ -3,15 +3,15 @@
   hosts: workers
   become: yes
   vars:
-    master_ip: 10.148.0.2
+    master_ip: 10.148.0.19
   tasks:
-    - name: create mount point
-      file:
-        path: /opt/nfs/data
-        state: directory
-        mode: 0777
-        group: nogroup
-        owner: nobody
+    # - name: create mount point
+    #   file:
+    #     path: /opt/nfs/data
+    #     state: directory
+    #     mode: 0777
+    #     group: nogroup
+    #     owner: nobody
     - name: mount /opt/nfs/data
       mount:
         path: /opt/nfs/data
