@@ -19,14 +19,14 @@ spec:
         app: spring-hostpath-app
     spec:
       containers:
-        - name: spring-app
+        - name: spring-app-hostpath
           image: 69966/springgradleimg:1.1.1
           ports:
             - containerPort: 8080
           volumeMounts:
-            - name: spring-pvc-vol
+            - name: spring-pvc-hostpath
               mountPath: /app/src/main/resources/images
       volumes:
-        - name: spring-pvc-vol
+        - name: spring-pvc-hostpath
           persistentVolumeClaim:
             claimName: spring-hostpath-pvc
