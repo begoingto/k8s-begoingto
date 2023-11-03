@@ -24,9 +24,9 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
-            - name: spring-pvc
+            - name: spring-pvc-vol
               mountPath: /app/src/main/resources/images
       volumes:
-        - name: spring-pvc
+        - name: spring-pvc-vol
           persistentVolumeClaim:
-          claimName: spring-pvc
+            claimName: spring-pvc
