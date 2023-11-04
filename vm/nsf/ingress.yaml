@@ -5,7 +5,7 @@ metadata:
   namespace: nsf
 spec:
   rules: 
-    - host: nsf.begoingdev.test
+    - host: nsf.begoingtodev.test
       http:
         paths: 
           - path: /
