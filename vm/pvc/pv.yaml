@@ -10,5 +10,5 @@ spec:
     - ReadWriteMany
   storageClassName: nfs-sharing
   nfs:
-    server: 10.148.0.19
+    server: 10.0.0.2
     path: /opt/nfs/data
