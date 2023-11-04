@@ -3,6 +3,8 @@
   hosts: all
   become: yes
   gather_facts: yes
+  vars:
+    master_ip: 10.0.0.2
   tasks:
     - name: create nfs directory
       file:
@@ -57,7 +59,7 @@
     - name: Add specific IPs to NFS exports
       lineinfile:
         path: /etc/exports
-        line: "/opt/nfs/data 10.148.0.19(rw,sync,no_subtree_check) 10.148.0.20(rw,sync,no_subtree_check) 10.184.0.2(rw,sync,no_subtree_check)"
+        line: "/opt/nfs/data 10.0.0.2(rw,sync,no_subtree_check) 10.0.0.3(rw,sync,no_subtree_check) 10.0.0.4(rw,sync,no_subtree_check)"
         state: present
       when: "'masters' in group_names"
       notify:
@@ -77,6 +79,15 @@
         name: nfs-kernel-server
         state: restarted
       when: "'masters' in group_names"
+
+    - name: mount /opt/nfs/data
+      mount:
+        path: /opt/nfs/data
+        src: "{{ master_ip }}:/opt/nfs/data"
+        fstype: nfs
+        opts: defaults
+        state: mounted
+      when: "'workers' in group_names"
 
   handlers:
     - name: Export NFS
