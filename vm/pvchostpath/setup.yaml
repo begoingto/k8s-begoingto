@@ -1,0 +1,95 @@
+# create PV
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: spring-hostpath-pv
+  namespace: pvc-hostpath
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hostpath-sharing
+  hostPath:
+    path: /opt/nfs/data/hostpath
+---
+# create PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: spring-hostpath-pvc
+  namespace: pvc-hostpath
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: hostpath-sharing
+---
+# create deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-deployment
+  namespace: pvc-hostpath
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      name: spring-app
+  template:
+    metadata:
+      labels:
+        name: spring-app
+    spec:
+      containers: 
+        - name: spring-app-cont 
+          image: 69966/springgradleimg:1.1.1
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: my-new-vol 
+              mountPath: /app/src/main/resources/images
+      volumes:
+        - name: my-new-vol
+          persistentVolumeClaim:
+            claimName: spring-hostpath-pvc 
+---  
+# create spring svc 
+apiVersion: v1
+kind: Service 
+metadata:
+  name: spring-svc
+  namespace: pvc-hostpath
+spec:
+  type: ClusterIP 
+  selector:
+    name: spring-app
+  ports:
+    - port: 8080
+      targetPort: 8080
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: 
+  name: spring-pvc-hostpath
+  namespace: pvc-hostpath
+spec:
+  rules: 
+    - host: hostpath.begoingdev.me
+      http:
+        paths: 
+          - path: /
+            pathType: Prefix
+            backend: 
+              service: 
+                name: spring-svc
+                port: 
+                  number: 8080
