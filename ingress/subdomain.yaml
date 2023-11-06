@@ -21,6 +21,21 @@ spec:
           ports:
             - containerPort: 80
 
+# create pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc-subdomain
+  namespace: ing-subdomain-certificate
+spec: 
+  storageClassName: nfs-client 
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+
 # create deployment 
 ---
 apiVersion: apps/v1
@@ -49,7 +64,7 @@ spec:
       volumes:
         - name: nfs-volume-spring
           persistentVolumeClaim:
-            claimName: nfs-pvc-spring
+            claimName: nfs-pvc-subdomain
 
 ---
 # create service react
