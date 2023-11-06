@@ -103,8 +103,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: subdomain-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: /
   namespace: ing-subdomain-certificate
 spec:
   rules:
@@ -118,7 +118,8 @@ spec:
                 name: subdomain-react-svc
                 port:
                   number: 80
-          - path: /api/(/|$)(.*)
+          - path: /api
+          - path: /api/*
             pathType: Prefix
             backend:
               service:
