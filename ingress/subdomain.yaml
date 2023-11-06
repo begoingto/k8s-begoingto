@@ -126,20 +126,20 @@ spec:
                 port:
                   number: 80
 
-    - host: b.sen-pai.live
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: subdomain-spring-svc
-                port:
-                  number: 80
-          - path: /ui
-            pathType: Prefix
-            backend:
-              service:
-                name: subdomain-react-svc
-                port:
-                  number: 80
+    # - host: b.sen-pai.live
+    #   http:
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: subdomain-spring-svc
+    #             port:
+    #               number: 80
+    #       - path: /ui
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: subdomain-react-svc
+    #             port:
+    #               number: 80
