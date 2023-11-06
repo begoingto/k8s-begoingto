@@ -67,7 +67,7 @@ metadata:
   namespace: dynamic-pv
 spec: 
   rules:
-  - host: dynamic-pv.begoingdev.me
+  - host: dynamicpv.begoingdev.me
     http:
       paths:
         - path: /
