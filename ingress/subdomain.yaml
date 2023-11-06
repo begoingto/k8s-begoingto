@@ -104,6 +104,8 @@ kind: Ingress
 metadata:
   name: subdomain-ingress
   namespace: ing-subdomain-certificate
+  anotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - host: f.sen-pai.live
