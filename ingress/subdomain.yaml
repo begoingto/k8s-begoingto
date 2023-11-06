@@ -1,4 +1,18 @@
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc-spring
+  namespace: ing-subdomain-certificate
+spec: 
+  storageClassName: nfs-client-spring 
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+
+---
 # create deployment
 apiVersion: apps/v1
 kind: Deployment
@@ -20,21 +34,6 @@ spec:
           image: 69966/reactjsimage:latest
           ports:
             - containerPort: 80
-
-# create pvc
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: spring-pvc-subdomain
-  namespace: ing-subdomain-certificate
-spec: 
-  storageClassName: nfs-spring
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 2Gi
 
 # create deployment 
 ---
@@ -58,13 +57,13 @@ spec:
           image: 69966/springgradleimg:1.1.1
           ports:
             - containerPort: 8080
-      #     volumeMounts:
-      #       - name: nfs-volume-spring
-      #         mountPath: /app/src/main/resources/images
-      # volumes:
-      #   - name: nfs-volume-spring
-      #     persistentVolumeClaim:
-      #       claimName: spring-pvc-subdomain
+          volumeMounts:
+            - name: nfs-volume
+              mountPath: /app/src/main/resources/images
+      volumes:
+        - name: nfs-volume
+          persistentVolumeClaim:
+            claimName: nfs-pvc-spring
 
 ---
 # create service react
