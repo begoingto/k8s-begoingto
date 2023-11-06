@@ -29,7 +29,7 @@ metadata:
   name: nfs-pvc-subdomain
   namespace: ing-subdomain-certificate
 spec: 
-  storageClassName: nfs-client 
+  storageClassName: nfs-client-spring
   accessModes:
     - ReadWriteMany
   resources:
