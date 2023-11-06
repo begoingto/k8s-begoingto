@@ -111,7 +111,7 @@ spec:
     - host: f.sen-pai.live
       http:
         paths:
-          - path: /
+          - path: /ui
             pathType: Prefix
             backend:
               service:
