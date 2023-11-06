@@ -105,7 +105,7 @@ metadata:
   name: subdomain-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/use-regex: true
+    nginx.ingress.kubernetes.io/use-regex: "true"
   namespace: ing-subdomain-certificate
 spec:
   rules:
