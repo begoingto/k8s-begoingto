@@ -118,7 +118,7 @@ spec:
                 name: subdomain-react-svc
                 port:
                   number: 80
-          - path: /api/*
+          - path: /api
             pathType: Prefix
             backend:
               service:
