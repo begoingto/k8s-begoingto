@@ -103,9 +103,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: subdomain-ingress
-  namespace: ing-subdomain-certificate
-  anotations:
+  annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+  namespace: ing-subdomain-certificate
 spec:
   rules:
     - host: f.sen-pai.live
