@@ -26,10 +26,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-pvc-subdomain
+  name: spring-pvc-subdomain
   namespace: ing-subdomain-certificate
 spec: 
-  storageClassName: nfs-client-spring
+  storageClassName: nfs-spring
   accessModes:
     - ReadWriteMany
   resources:
@@ -64,7 +64,7 @@ spec:
       volumes:
         - name: nfs-volume-spring
           persistentVolumeClaim:
-            claimName: nfs-pvc-subdomain
+            claimName: spring-pvc-subdomain
 
 ---
 # create service react
