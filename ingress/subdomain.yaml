@@ -57,13 +57,13 @@ spec:
           image: 69966/springgradleimg:1.1.1
           ports:
             - containerPort: 8080
-          volumeMounts:
-            - name: nfs-volume
-              mountPath: /app/src/main/resources/images
-      volumes:
-        - name: nfs-volume
-          persistentVolumeClaim:
-            claimName: nfs-pvc-spring
+      #     volumeMounts:
+      #       - name: nfs-volume
+      #         mountPath: /app/src/main/resources/images
+      # volumes:
+      #   - name: nfs-volume
+      #     persistentVolumeClaim:
+      #       claimName: nfs-pvc-spring
 
 ---
 # create service react
