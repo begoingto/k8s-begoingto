@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: react-app
+  name: react-app-svc
   namespace: cert-manager-ingress
 spec:
   selector:
@@ -19,7 +19,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: spring-api
+  name: spring-api-svc
   namespace: cert-manager-ingress
 spec:
   selector:
