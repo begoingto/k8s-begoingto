@@ -76,30 +76,30 @@ spec:
 
 ---
 # Create ingress for react-app
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: react-app-ingress
-  namespace: cert-manager-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/use-regex: "true"
-spec:
-  rules:
-    - host: b.sen-pai.live
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: react-app-svc
-                port:
-                  number: 80
-          - path: /api(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: spring-api-svc
-                port:
-                  number: 8080
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: react-app-ingress
+#   namespace: cert-manager-ingress
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /$2
+#     nginx.ingress.kubernetes.io/use-regex: "true"
+# spec:
+#   rules:
+    # - host: b.sen-pai.live
+    #   http:
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: react-app-svc
+    #             port:
+    #               number: 80
+    #       - path: /api(/|$)(.*)
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: spring-api-svc
+    #             port:
+    #               number: 8080
