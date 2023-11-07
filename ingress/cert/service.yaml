@@ -1,0 +1,31 @@
+---
+# Create service for react-app
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-app
+  namespace: cert-manager-ingress
+spec:
+  selector:
+    app: react-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+---
+# Create service for spring-api
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-api
+  namespace: cert-manager-ingress
+spec:
+  selector:
+    app: spring-api
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
