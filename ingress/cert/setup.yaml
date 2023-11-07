@@ -63,7 +63,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: spring-api
+  name: spring-api-svc
   namespace: cert-manager-ingress
 spec:
   selector:
@@ -95,3 +95,10 @@ spec:
                 name: react-app-svc
                 port:
                   number: 80
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: spring-api-svc
+                port:
+                  number: 8080
