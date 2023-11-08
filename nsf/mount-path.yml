@@ -1,6 +1,6 @@
 --- 
 - name: mount /opt/nfs/data
-  hosts: workers
+  hosts: localhost
   become: yes
   vars:
     master_ip: 10.148.0.19
