@@ -4,11 +4,9 @@ kind: Ingress
 metadata:
   name: argocd-domain-ingress
   namespace: argocd
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-    - host: argocd.begoingdev.me
+    - host: argo.begoingdev.me
       http:
         paths:
           - path: /
@@ -17,4 +15,4 @@ spec:
               service:
                 name: argocd-server
                 port:
-                  number: 443
+                  number: 80
