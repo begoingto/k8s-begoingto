@@ -4,6 +4,12 @@ kind: Ingress
 metadata:
   name: argocd-domain-ingress
   namespace: argocd
+  annotations:
+    kubernetes.io/ingressClassName: nginx
+    # cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   rules:
     - host: argo.begoingdev.me
